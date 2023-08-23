@@ -28,8 +28,10 @@ st.text("*Only available currently for epic*")
 
 import streamlit as st
 
-# Using object notation
-model_select = st.sidebar.selectbox("Model:", ("lg", "trf"))
+# # Using object notation
+# model_select = st.sidebar.selectbox("Model:", ("lg", "trf"))
+
+model_select = "lg"
 
 st.text(f"Using model: {model_select}")
 
@@ -42,7 +44,7 @@ def load_data():
 
     checkpoints = {
         "data/tess_epic_line_lg_vectors.pkl": "https://drive.google.com/uc?id=1hmlFrlzDcggCEAu_eNiIlACuKRYMyjf1",
-        "data/tess_epic_line_trf_vectors.pkl": "https://drive.google.com/uc?id=1EIVDSKKf_-NAgc6Bct2PnlRjY8qq4NRA",
+        # "data/tess_epic_line_trf_vectors.pkl": "https://drive.google.com/uc?id=1EIVDSKKf_-NAgc6Bct2PnlRjY8qq4NRA",
     }
 
     for checkpoint, remote in checkpoints.items():
@@ -56,10 +58,10 @@ def load_data():
             print(f"Found {checkpoint}.")
 
     lg_data = pickle.load(open("data/tess_epic_line_lg_vectors.pkl", "rb"))
-    trf_data = pickle.load(open("data/tess_epic_line_trf_vectors.pkl", "rb"))
+    # trf_data = pickle.load(open("data/tess_epic_line_trf_vectors.pkl", "rb"))
     data = {
         "lg": lg_data,
-        "trf": trf_data,
+        # "trf": trf_data,
     }
     return data
 
@@ -68,7 +70,7 @@ def load_data():
 def create_indexes():
     indexes = {
         "lg": "data/tess_epic_line_lg_vectors.pkl",
-        "trf": "data/tess_epic_line_trf_vectors.pkl",
+        # "trf": "data/tess_epic_line_trf_vectors.pkl",
     }
 
     for model, index in indexes.items():
@@ -87,7 +89,7 @@ create_indexes()
 
 vectors = data[model_select]
 lg_index = "data/tessannoy_lg.ann"
-trf_index = "data/tessannoy_trf.ann"
+# trf_index = "data/tessannoy_trf.ann"
 
 citations = np.array(list(vectors.keys()))
 texts = np.array([vectors[citation]["text"] for citation in citations])
@@ -96,8 +98,8 @@ vectors = np.array([vectors[citation]["vector"] for citation in citations])
 index = TessAnnoyIndex(vectors, texts, citations)
 if model_select == "lg":
     index.load(lg_index)
-else:
-    index.load(trf_index)
+# else:
+#     index.load(trf_index)
 
 line = selectbox("Select line", citations, key="selectbox")
 
