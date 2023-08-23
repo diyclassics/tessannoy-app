@@ -1,0 +1,6 @@
+annoy==1.17.2
+gdown==4.7.1
+pandas==2.0.1
+streamlit==1.25.0
+streamlit-extras==0.3.0
+watchdog==3.0.0
